@@ -13,11 +13,13 @@ const update = () => {
     document.getElementById('out').textContent = getState().value;
 }
 
+const bindActionCreator = (creator, dispatch) => (...args) => {
+    dispatch(creator(...args));
+} 
 
-
-const incDispatch = () => dispatch(inc());
-const rndDispatch = (value) => dispatch(rnd(value));
-const decDispatch = () => dispatch(dec());
+const incDispatch = bindActionCreator(inc, dispatch);
+const rndDispatch = bindActionCreator(rnd, dispatch);
+const decDispatch = bindActionCreator(dec, dispatch);
 
 
 
@@ -27,6 +29,7 @@ document.getElementById('rnd').addEventListener('click', () => {
     let value = Math.floor(Math.random() * 10);
     rndDispatch(value);
 })
+
 
 
 
