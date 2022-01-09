@@ -1,8 +1,8 @@
 
 import './App.css';
-import { createStore } from 'redux';
+import { createStore, bindActionCreators } from 'redux';
 import { reducer } from './reducer';
-import { inc, dec, rnd } from './actions';
+import * as actions from './actions';
 
 const store = createStore(reducer);
 
@@ -13,21 +13,21 @@ const update = () => {
     document.getElementById('out').textContent = getState().value;
 }
 
-const bindActionCreator = (creator, dispatch) => (...args) => {
-    dispatch(creator(...args));
-} 
+// const bindActionCreator = (creator, dispatch) => (...args) => {
+//     dispatch(creator(...args));
+// } 
+const {inc, rnd, dec} = bindActionCreators(actions, dispatch)
+// const incDispatch = bindActionCreators(inc, dispatch);
+// const rndDispatch = bindActionCreators(rnd, dispatch);
+// const decDispatch = bindActionCreators(dec, dispatch);
 
-const incDispatch = bindActionCreator(inc, dispatch);
-const rndDispatch = bindActionCreator(rnd, dispatch);
-const decDispatch = bindActionCreator(dec, dispatch);
 
 
-
-document.getElementById('inc').addEventListener('click', incDispatch);
-document.getElementById('dec').addEventListener('click', decDispatch);
+document.getElementById('inc').addEventListener('click', inc);
+document.getElementById('dec').addEventListener('click', dec);
 document.getElementById('rnd').addEventListener('click', () => {
     let value = Math.floor(Math.random() * 10);
-    rndDispatch(value);
+    rnd(value);
 })
 
 
